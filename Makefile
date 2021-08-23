@@ -1,11 +1,12 @@
+WEBSITE_REPO=github.com/gefion-tech/gefion.gg
+VERSION?="1.0.0"
+
 .PHONY: 
-	run
+	build
 
 build:
-	go build -o gg -v ./src/main.go 
+	go build -v ./cmd/gg
+	
 
-run:
-	go run -v ./src/main.go
-
-.DEFAULT_GOAL := run
+.DEFAULT_GOAL := build
 
