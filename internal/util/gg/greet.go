@@ -15,12 +15,6 @@ func NewGreetCommand() *GreetCommand {
 	return gc
 }
 
-type GreetCommand struct {
-	fs *flag.FlagSet
-
-	name string
-}
-
 func (g *GreetCommand) Name() string {
 	return g.fs.Name()
 }
