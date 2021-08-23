@@ -1,16 +1,15 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
-	gg "github.com/gefion-tech/gefion.gg/internal/util"
-	_ "github.com/go-git/go-git"
+	"github.com/fatih/color"
+	"github.com/gefion-tech/gefion.gg/internal/util/gg"
 )
 
 func main() {
 	if err := gg.Root(os.Args[1:]); err != nil {
-		fmt.Println(err)
+		color.Red("Error: " + err.Error())
 		os.Exit(1)
 	}
 }

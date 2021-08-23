@@ -3,6 +3,7 @@ module github.com/gefion-tech/gefion.gg
 go 1.16
 
 require (
+	github.com/fatih/color v1.12.0 // indirect
 	github.com/go-git/go-git v3.2.0+incompatible // indirect
 	github.com/sergi/go-diff v1.2.0 // indirect
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect

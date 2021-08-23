@@ -19,7 +19,7 @@ func Root(args []string) error {
 	}
 
 	cmds := []Runner{
-		NewGreetCommand(),
+		TagCommand(),
 	}
 
 	subcommand := os.Args[1]
