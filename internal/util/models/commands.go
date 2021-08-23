@@ -5,7 +5,7 @@ import (
 )
 
 type GreetCommand struct {
-	fs *flag.FlagSet
+	Fs *flag.FlagSet
 
-	name string
+	Username string
 }
