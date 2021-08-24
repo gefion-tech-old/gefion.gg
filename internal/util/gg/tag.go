@@ -16,6 +16,7 @@ func TagCommand() *TagCommandS {
 	tagCommand := &TagCommandS{
 		fs: flag.NewFlagSet("tag", flag.ContinueOnError),
 	}
+
 	return tagCommand
 }
 
@@ -32,17 +33,16 @@ func (command *TagCommandS) Init(args []string) error {
 // Получить выполнить субкоманду
 func (command *TagCommandS) Run() model.Response {
 	switch command.fs.Arg(0) {
-
 	case "clone":
 		if len(command.fs.Args()) == 5 {
 			fmt.Println("Скачивание с гита")
 			return model.CreateResponse("", "")
 		} else if len(command.fs.Args()) < 5 || len(command.fs.Args()) > 5 {
-			return model.CreateResponse("syntax error",
+			return model.CreateResponse(model.UTIL__ERROR,
 				"Invalid number of arguments to run command `clone`")
 		} else {
-			return model.CreateResponse("syntax error",
-				"Unknown error")
+			return model.CreateResponse(model.UTIL__ERROR,
+				model.UNDEFINED_UTIL__ERROR)
 		}
 
 	case "list":
@@ -50,16 +50,20 @@ func (command *TagCommandS) Run() model.Response {
 			fmt.Println("Получаю список тегов")
 			return model.CreateResponse("", "")
 		} else if len(command.fs.Args()) < 2 || len(command.fs.Args()) > 2 {
-			return model.CreateResponse("syntax error",
+			return model.CreateResponse(model.UTIL__ERROR,
 				"Invalid number of arguments to run command `list`")
 		} else {
-			return model.CreateResponse("syntax error",
-				"Unknown error")
+			return model.CreateResponse(model.UTIL__ERROR,
+				model.UNDEFINED_UTIL__ERROR)
 		}
 
 	default:
-		return model.CreateResponse("syntax error",
-			"Unknown argument")
-
+		if len(command.fs.Args()) > 0 {
+			return model.CreateResponse(model.UTIL__ERROR,
+				"Unknown argument")
+		} else {
+			return model.CreateResponse(model.UTIL__ERROR,
+				"You must pass an argument")
+		}
 	}
 }

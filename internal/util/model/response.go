@@ -1,5 +1,9 @@
 package model
 
+// Повторяющиеся ошибки
+var UTIL__ERROR string = "syntax error"
+var UNDEFINED_UTIL__ERROR string = "Unknown error"
+
 type Error struct {
 	Type    string `json:"type"`
 	Message string `json:"message"`
