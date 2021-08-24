@@ -10,10 +10,6 @@ import (
 )
 
 func main() {
-	// if err := gg.Root(os.Args[1:]); err != nil {
-	// 	color.Red("Error: " + err.Error())
-	// 	os.Exit(1)
-	// }
 	res := gg.Root(os.Args[1:])
 	json_data, err := json.Marshal(res)
 
