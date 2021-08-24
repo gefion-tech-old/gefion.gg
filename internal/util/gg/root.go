@@ -1,28 +1,29 @@
 package gg
 
 import (
-	"errors"
 	"fmt"
 	"os"
+
+	"github.com/gefion-tech/gefion.gg/internal/util/model"
 )
 
 // Интерфейс субкоманды
 type Runner interface {
 	Init([]string) error
-	Run() error
+	Run() model.Response
 	Name() string
 }
 
-// разделитель параметров авторизации
+// Разделитель для параметров авторизации
 var delimiter int = 0
 
 // Определение интерфейса субкоманд
-func Root(args []string) error {
+func Root(args []string) model.Response {
 	if len(args) < 1 {
-		return errors.New("You must pass a sub-command")
+		return model.CreateResponse("syntax error", "You must pass a sub-command")
 	}
 
-	// Список подключенных субкоманд
+	//Список подключенных субкоманд
 	cmds := []Runner{
 		TagCommand(),
 	}
@@ -48,6 +49,8 @@ func Root(args []string) error {
 		}
 	}
 
-	// Если передена какая-то дичь
-	return fmt.Errorf("Unknown subcommand: `%s`", subcommand)
+	// Если передaна какая-то дичь
+	return model.CreateResponse("syntax error",
+		fmt.Errorf("Unknown subcommand: `%s`",
+			subcommand).Error())
 }

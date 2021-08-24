@@ -3,6 +3,8 @@ package gg
 import (
 	"flag"
 	"fmt"
+
+	"github.com/gefion-tech/gefion.gg/internal/util/model"
 )
 
 type TagCommandS struct {
@@ -28,30 +30,36 @@ func (command *TagCommandS) Init(args []string) error {
 }
 
 // Получить выполнить субкоманду
-func (command *TagCommandS) Run() error {
+func (command *TagCommandS) Run() model.Response {
 	switch command.fs.Arg(0) {
 
 	case "clone":
 		if len(command.fs.Args()) == 5 {
 			fmt.Println("Скачивание с гита")
-			return nil
+			return model.CreateResponse("", "")
 		} else if len(command.fs.Args()) < 5 || len(command.fs.Args()) > 5 {
-			return fmt.Errorf("Invalid number of arguments to run command `clone`")
+			return model.CreateResponse("syntax error",
+				"Invalid number of arguments to run command `clone`")
 		} else {
-			return fmt.Errorf("Unknown error")
+			return model.CreateResponse("syntax error",
+				"Unknown error")
 		}
 
 	case "list":
 		if len(command.fs.Args()) == 2 {
 			fmt.Println("Получаю список тегов")
-			return nil
+			return model.CreateResponse("", "")
 		} else if len(command.fs.Args()) < 2 || len(command.fs.Args()) > 2 {
-			return fmt.Errorf("Invalid number of arguments to run command `list`")
+			return model.CreateResponse("syntax error",
+				"Invalid number of arguments to run command `list`")
 		} else {
-			return fmt.Errorf("Unknown error")
+			return model.CreateResponse("syntax error",
+				"Unknown error")
 		}
 
 	default:
-		return fmt.Errorf("Unknown argument")
+		return model.CreateResponse("syntax error",
+			"Unknown argument")
+
 	}
 }
