@@ -4,8 +4,14 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/fatih/color"
 	"github.com/gefion-tech/gefion.gg/internal/util/model"
 )
+
+type User struct {
+	username string
+	password string
+}
 
 // Интерфейс субкоманды
 type Runner interface {
@@ -17,11 +23,17 @@ type Runner interface {
 // Разделитель для параметров авторизации
 var delimiter int = 0
 
+var user User
+
 // Определение интерфейса субкоманд
 func Root(args []string) model.Response {
 	if len(args) < 1 {
-		return model.CreateResponse("syntax error", "You must pass a sub-command")
+		return model.CreateResponse(model.UTIL__ERROR, "You must pass a subcommand")
 	}
+
+	// Устанавливаю параметры для авторизации
+	user.username = model.GetFlagValue(args, model.Usrn_s, model.Usrn_f, "")
+	user.password = model.GetFlagValue(args, model.Pass_s, model.Pass_f, "")
 
 	//Список подключенных субкоманд
 	cmds := []Runner{
@@ -39,18 +51,29 @@ func Root(args []string) model.Response {
 
 	// Определение субкоманды
 	for _, cmd := range cmds {
+		// Если найдена поддерживаемая субкоманда
 		if cmd.Name() == subcommand {
-			if delimiter > 0 {
+			// Если разделитель присутствует и после него указано
+			// минимальное число парматеров.
+			if delimiter > 0 && len(os.Args[delimiter:]) > 2 {
+				color.Yellow("Working with a private repository...")
 				cmd.Init(os.Args[2:delimiter])
 			} else {
-				cmd.Init(os.Args[2:])
+				color.Yellow("Working with a public repository...")
+				// Если разделитель присутствует но после него
+				// не указаны параметры.
+				if delimiter > 0 && len(os.Args[delimiter:]) > 0 {
+					cmd.Init(os.Args[2:delimiter])
+				} else {
+					cmd.Init(os.Args[2:])
+				}
 			}
 			return cmd.Run()
 		}
 	}
 
 	// Если передaна какая-то дичь
-	return model.CreateResponse("syntax error",
+	return model.CreateResponse(model.UTIL__ERROR,
 		fmt.Errorf("Unknown subcommand: `%s`",
 			subcommand).Error())
 }
