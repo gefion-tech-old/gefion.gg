@@ -1,7 +1,10 @@
 package model
 
 // Повторяющиеся ошибки
+
 var UTIL__ERROR string = "syntax error"
+var GIT__ERROR string = "git error"
+
 var UNDEFINED_UTIL__ERROR string = "Unknown error"
 
 type Error struct {

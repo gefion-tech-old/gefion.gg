@@ -6,6 +6,7 @@ require (
 	github.com/TylerBrock/colorjson v0.0.0-20200706003622-8a50f05110d2 // indirect
 	github.com/fatih/color v1.12.0 // indirect
 	github.com/go-git/go-git v3.2.0+incompatible // indirect
+	github.com/go-git/go-git/v5 v5.4.2 // indirect
 	github.com/mattn/go-isatty v0.0.13 // indirect
 	github.com/sergi/go-diff v1.2.0 // indirect
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect
