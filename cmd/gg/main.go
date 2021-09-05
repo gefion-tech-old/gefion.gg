@@ -23,5 +23,6 @@ func main() {
 	f.Indent = 2
 	s, _ := f.Marshal(obj)
 
+	fmt.Printf("\n\n")
 	fmt.Println(string(s))
 }

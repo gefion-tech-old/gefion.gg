@@ -14,16 +14,3 @@ type ErrorBody struct {
 type Error struct {
 	Error *ErrorBody `json:"error,omitempty"`
 }
-
-// Создание ответа
-func MakeRes(err *ErrorBody) Error {
-	if err != nil {
-		return Error{
-			Error: &ErrorBody{
-				Type:    err.Type,
-				Message: err.Message,
-			},
-		}
-	}
-	return Error{Error: nil}
-}

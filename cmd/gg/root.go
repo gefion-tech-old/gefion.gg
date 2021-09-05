@@ -9,22 +9,24 @@ import (
 
 type Runner interface {
 	Init([]string) error
-	Run() m.Error
+	Run() interface{}
 	Name() string
 }
 
-func root(args []string) m.Error {
+func root(args []string) interface{} {
 	if len(args) < 1 {
-		return m.MakeRes(&m.ErrorBody{
-			Type:    m.UTIL__ERROR,
-			Message: "You must pass a subcommand",
-		})
+		return m.Error{
+			Error: &m.ErrorBody{
+				Type:    m.UTIL__ERROR,
+				Message: "You must pass a subcommand",
+			},
+		}
 	}
 
 	subcommand := os.Args[1]
 	cmds := []Runner{
 		c.TagListCommand(),
-		c.TagCloneCommand(),
+		// c.TagCloneCommand(),
 	}
 
 	for _, cmd := range cmds {
@@ -34,8 +36,10 @@ func root(args []string) m.Error {
 		}
 	}
 
-	return m.MakeRes(&m.ErrorBody{
-		Type:    m.UTIL__ERROR,
-		Message: "Unknown subcommand: " + subcommand,
-	})
+	return m.Error{
+		Error: &m.ErrorBody{
+			Type:    m.UTIL__ERROR,
+			Message: "Unknown subcommand: " + subcommand,
+		},
+	}
 }
