@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"net/url"
 	"os"
 
 	c "github.com/gefion-tech/gefion.gg/command"
@@ -23,10 +25,23 @@ func root(args []string) interface{} {
 		}
 	}
 
+	// Проверка на валидность переданнных парметров
+	for _, param := range args {
+		_, err := url.QueryUnescape(param)
+		if err != nil {
+			return m.Error{
+				Error: &m.ErrorBody{
+					Type:    m.UTIL__ERROR,
+					Message: fmt.Sprintf("Unable to decode passed parameter: `%s`", param),
+				},
+			}
+		}
+	}
+
 	subcommand := os.Args[1]
 	cmds := []Runner{
 		c.TagListCommand(),
-		// c.TagCloneCommand(),
+		c.TagCloneCommand(),
 	}
 
 	for _, cmd := range cmds {

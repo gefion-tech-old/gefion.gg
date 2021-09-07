@@ -6,6 +6,7 @@ VERSION?="1.0.0"
 
 build:
 	go build -v ./cmd/gg
+	rm -rf /home/I0HuKc/NotJob/test
 	
 
 .DEFAULT_GOAL := build
